@@ -15,7 +15,14 @@ Fraction :: Fraction(int numerator , int denominator){
 }
 
 
-Fraction::Fraction(double num) {
+Fraction::Fraction(float num) {
+    int up = this->numerator = (int)(num*1000);
+    int down = this->denominator = 1000;
+
+    int gcd = __gcd(up, down);
+    this->numerator = up/gcd;
+    this->denominator = down/gcd;
+
    
 }
 
@@ -81,18 +88,21 @@ Fraction Fraction::operator-(Fraction& other){
 
 
 
-double Fraction::operator-(double num){
+Fraction operator-(Fraction &frac, float num){
     
-    double result = (this->numerator / this->denominator) - num;
-    return result;
+    int up = num*1000;
+    int down = 1000; 
+    Fraction temp(up,down);
+    
+    return frac-temp;
 }
 
-Fraction operator-(double num, Fraction &frac){
+Fraction operator-(float num, Fraction &frac){
     
     int up = num*1000;
     int down = 1000; 
     
-    return Fraction(up,down) - frac;
+    return Fraction(up,down)-frac;
 }
 
 Fraction Fraction::operator*(Fraction& other) {
@@ -123,7 +133,7 @@ Fraction operator*(double num, Fraction &frac){
 }
 
 
-Fraction Fraction::operator/(Fraction& other) {
+Fraction Fraction::operator/(Fraction& other) const{
 
     int up = this->numerator * other.denominator;
     int down = this->denominator * other.numerator;
@@ -135,12 +145,22 @@ Fraction Fraction::operator/(Fraction& other) {
     return Fraction(up,down);   
 }
 
-Fraction operator/(double num, Fraction &frac){
+Fraction operator/(float num, Fraction &frac){
+    
+    int up = num*1000;
+    int down = 1000;
+    Fraction temp(up,down); 
+    
+    return temp/frac;
+}
+
+Fraction operator/(Fraction &frac, float num){
     
     int up = num*1000;
     int down = 1000; 
+    Fraction temp(up,down); 
     
-    return Fraction(up,down)/frac;
+    return frac/temp;
 }
 
 
@@ -160,10 +180,26 @@ bool Fraction::operator<(const Fraction& other) const {
     
 }
 
+bool operator<(float num, const Fraction& frac) {
+    if (Fraction(num) < frac){
+        return true;
+    }
+    return false;
+    
+}
+
 bool Fraction::operator>(const Fraction& other) const {
     double thisValue = static_cast<double>(this->numerator) / this->denominator;
     double otherValue = static_cast<double>(other.numerator) / other.denominator;
     return thisValue > otherValue;
+}
+
+bool operator>(float num, const Fraction& frac) {
+    if (Fraction(num) > frac){
+        return true;
+    }
+    return false;
+    
 }
 
 bool Fraction::operator<=(const Fraction& other) const {
@@ -172,11 +208,27 @@ bool Fraction::operator<=(const Fraction& other) const {
     } 
     return false;
 }
+
+bool operator<=(float num, const Fraction& frac){
+    if (Fraction(num) <= frac){
+        return true;
+    }
+    return false;
+    
+}
     
 bool Fraction::operator>=(const Fraction& other) const {
     double thisValue = static_cast<double>(this->numerator) / this->denominator;
     double otherValue = static_cast<double>(other.numerator) / other.denominator;
     return thisValue >= otherValue;
+}
+
+bool operator>=(float num, const Fraction& frac){
+    if (Fraction(num) >= frac){
+        return true;
+    }
+    return false;
+    
 }
 
 //prefix: ++n

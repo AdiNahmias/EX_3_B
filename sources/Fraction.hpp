@@ -13,7 +13,7 @@ class Fraction{
 
     public:
     Fraction(int numerator, int denominator);
-    Fraction(double num);
+    Fraction(float num);
     int getNumerator();
     int getDenominator();
     void setNumerator(int numerator);
@@ -22,18 +22,23 @@ class Fraction{
     double operator+(double num);
     friend Fraction operator+(double num, Fraction &frac);
     Fraction operator-(Fraction& other);
-    double operator-(double num);
-    friend Fraction operator-(double num, Fraction &frac);
+    friend Fraction operator-(Fraction &frac, float num);
+    friend Fraction operator-(float num, Fraction &frac);
     Fraction operator*(Fraction& other);
     double operator*(double num);
     friend Fraction operator*(double num, Fraction &frac);
-    Fraction operator/( Fraction& other);
-    friend Fraction operator/(double num, Fraction &frac);
+    Fraction operator/( Fraction& other) const;
+    friend Fraction operator/(Fraction &frac, float num);
+    friend Fraction operator/(float num, Fraction &frac);
     bool operator==(const Fraction& other) const;
     bool operator<(const Fraction& other) const;
+    friend bool operator<(float num, const Fraction &frac);
     bool operator>(const Fraction& other) const;
+    friend bool operator>(float num, const Fraction& frac);
     bool operator<=(const Fraction& other) const;
+    friend bool operator<=(float num, const Fraction& frac);
     bool operator>=(const Fraction& other) const;
+    friend bool operator>=(float num, const Fraction& frac);
     Fraction& operator++();
     Fraction& operator--();
     Fraction operator++(int);
