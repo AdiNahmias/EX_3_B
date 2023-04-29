@@ -360,8 +360,23 @@ Fraction Fraction::operator--(int) {
 }
 
 
-std::ostream& operator<<(std::ostream& output, const Fraction& fraction){
-    output << fraction.numerator<< "/" <<fraction.denominator;
+
+std::ostream& operator<<(std::ostream& output, const Fraction& fraction) {
+    if (fraction.denominator == 0) {
+        output << "Undefined";
+
+    //up and down are negative
+    } else if (fraction.denominator < 0) {
+        if (fraction.numerator < 0) {
+            output << (-fraction.numerator) << "/" << (-fraction.denominator);
+        //down is negative
+        } else {
+            output << "-" << fraction.numerator << "/" << (-fraction.denominator);
+        }
+    //up and down are not negative
+    } else {
+        output << fraction.numerator << "/" << fraction.denominator;
+    }
     return output;
 }
 
@@ -372,10 +387,10 @@ std::istream& operator>>(std::istream& input, Fraction& fraction){
 
 
     if((input>>up>>down) && down != 0){
-        if(down < 0){
-            up *= -1;
-            down *= -1;
-        }
+        // if(down < 0){
+        //     up *= -1;
+        //     down *= -1;
+        // }
         fraction = Fraction(up,down);
         
     }else{
