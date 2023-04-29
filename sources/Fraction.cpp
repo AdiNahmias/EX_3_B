@@ -372,7 +372,7 @@ std::istream& operator>>(std::istream& input, Fraction& fraction){
 
 
     if((input>>up>>down) && down != 0){
-        if(down < 0 || up < 0){
+        if(down < 0){
             up *= -1;
             down *= -1;
         }
