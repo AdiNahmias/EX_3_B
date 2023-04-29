@@ -395,7 +395,7 @@ std::istream& operator>>(std::istream& input, Fraction& fraction){
         
     }else{
 
-        throw invalid_argument("Invalid input");    
+        throw runtime_error("Invalid input");    
     }
     
     return input;
