@@ -2,7 +2,8 @@
 #define FRACTION_H
 
 #include <iostream>
-#include <algorithm>
+
+
 
 namespace ariel {
 class Fraction{
@@ -12,6 +13,9 @@ class Fraction{
         int denominator;
 
     public:
+
+    void chekOverflow(long numerator , long denominator)const;
+
     Fraction(int numerator, int denominator);
     Fraction();
     Fraction(float num);
@@ -37,10 +41,8 @@ class Fraction{
     friend Fraction operator/(const Fraction &frac, float num);
     friend Fraction operator/(float num, const Fraction &frac);
     
-    bool operator==(const Fraction& frc) const;
-    bool operator==(const float& num) const;
-    //friend bool operator==(const Fraction& fraction,float num);
-    //friend bool operator==(float num ,const Fraction& other_fraction);
+    bool operator==(const Fraction& other) const;
+    bool operator==(float num) const;
 
     bool operator<(const Fraction& other) const;
     friend bool operator<(const Fraction& fraction , float num);
