@@ -8,13 +8,16 @@
 namespace ariel {
 class Fraction{
 
-    private: 
-        int numerator;
-        int denominator;
+    private:
+
+    int numerator;
+    int denominator;
+    
+    //help function
+    void chekOverflow(long numerator , long denominator)const;
+    void reduce(int numerator , int denominator);
 
     public:
-
-    void chekOverflow(long numerator , long denominator)const;
 
     Fraction(int numerator, int denominator);
     Fraction();

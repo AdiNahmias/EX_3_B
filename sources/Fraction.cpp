@@ -14,15 +14,21 @@ void Fraction :: chekOverflow(long numerator , long denominator)const{
     }
 }
 
+void Fraction::reduce(int numerator , int denominator){
+    int gcd = std::__gcd(numerator, denominator);
+    this -> numerator = numerator/gcd;
+    this -> denominator = denominator/gcd;
+}
+
+
 Fraction :: Fraction(int numerator , int denominator){
     if (denominator == 0){
         throw std :: invalid_argument ("It is not possible to divide by 0");
     }
     this -> numerator = numerator;
     this -> denominator = denominator;
-    int gcd = std::__gcd(this->numerator, this->denominator);
-    this -> numerator = numerator/gcd;
-    this -> denominator = denominator/gcd;
+    reduce(this->numerator, this->denominator);
+    
 }
 
 Fraction :: Fraction(){
@@ -33,11 +39,9 @@ Fraction :: Fraction(){
 Fraction::Fraction(float num) {
     int up = this->numerator = (int)(num*1000);
     int down = this->denominator = 1000;
-    int gcd = __gcd(up, down);
-    this->numerator = up/gcd;
-    this->denominator = down/gcd; 
+    reduce(up, down);
+   
 }
-
 
 int Fraction::getNumerator(){
     return this->numerator;
@@ -49,9 +53,8 @@ int Fraction::getDenominator(){
 
 void Fraction::setNumerator(int numerator){
     this->numerator = numerator;
-    int gcd = __gcd(this->denominator, this->numerator);
-    this->numerator = numerator/gcd;
-    this->denominator = denominator/gcd;
+    reduce(this->denominator, this->numerator);
+    
 }
 
 void Fraction::setDenominator(int denominator){
@@ -59,19 +62,16 @@ void Fraction::setDenominator(int denominator){
         throw std :: invalid_argument ("It is not possible to divide by 0");
     }
     this->denominator = denominator;
-    int gcd = __gcd(this->denominator, this->numerator);
-    this->numerator = numerator/gcd;
-    this->denominator = denominator/gcd;
+    reduce(this->denominator, this->numerator);
+  
 }
 
 
 Fraction Fraction::operator+(const Fraction& other) const{ 
-    long up1 = (long)(this->numerator * other.denominator) + (long)(other.numerator * this->denominator);
-    long down1 = (long)this->denominator * other.denominator;
-    chekOverflow(up1, down1);
-    int up = (this->numerator * other.denominator) + (other.numerator * this->denominator);
-    int down = this->denominator * other.denominator;
-    return Fraction(up,down);
+    long up = (long)(this->numerator * other.denominator) + (long)(other.numerator * this->denominator);
+    long down = (long)this->denominator * other.denominator;
+    chekOverflow(up, down);
+    return Fraction((int)up,(int)down);
     
 }
 
@@ -86,12 +86,10 @@ Fraction operator+(const float num, const Fraction& frac){
 }
 
 Fraction Fraction::operator-(const Fraction& other)const{
-    long up1 = (long)(this->numerator * other.denominator) - (other.numerator * this->denominator);
-    long down1 = (long)this->denominator * other.denominator;
-    chekOverflow(up1,down1);
-    int up = (this->numerator * other.denominator) - (other.numerator * this->denominator);
-    int down = this->denominator * other.denominator;
-    return Fraction(up,down);
+    long up = (long)(this->numerator * other.denominator) - (other.numerator * this->denominator);
+    long down = (long)this->denominator * other.denominator;
+    chekOverflow(up,down);
+    return Fraction((int)up,(int)down);
     
 }
 
@@ -107,12 +105,10 @@ Fraction operator-(float num, const Fraction &frac){
 }
 
 Fraction Fraction::operator*(const Fraction& other)const{
-    long up1 = (long)this->numerator * other.numerator;
-    long down1 = (long)this->denominator * other.denominator;
-    chekOverflow(up1,down1);
-    int up = this->numerator * other.numerator;
-    int down = this->denominator * other.denominator;
-    return Fraction(up,down);
+    long up = (long)this->numerator * other.numerator;
+    long down = (long)this->denominator * other.denominator;
+    chekOverflow(up,down);
+    return Fraction((int)up,(int)down);
 }
 
 Fraction operator*(const Fraction &frac, float num){
@@ -129,12 +125,10 @@ Fraction Fraction::operator/(const Fraction& other) const{
     if(other.numerator == 0){
         throw std :: runtime_error ("It is not possible to divide by 0");
     }
-    long up1 = (long)this->numerator * (long)other.denominator;
-    long down1 = (long)this->denominator * (long)other.numerator;
-    chekOverflow(up1,down1);
-    int up = this->numerator * other.denominator;
-    int down = this->denominator * other.numerator;
-    return Fraction(up,down);   
+    long up = (long)this->numerator * (long)other.denominator;
+    long down = (long)this->denominator * (long)other.numerator;
+    chekOverflow(up,down);
+    return Fraction((int)up,(int)down);   
 }
 
 Fraction operator/(float num, const Fraction &frac){
